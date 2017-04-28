@@ -3,7 +3,7 @@
 Il programma è basato sull'uso dei threads. Ci sono 3 threads che partono QUASI contemporaneamente, mentre la loro esecuzione avviene contemporaneamente. Quando TOE capita subito dopo TAC c'è un punteggio che viene aumentato di uno (il quale parte da 0 ovviamente).
 Nel codice d'esecuzione dei threads, ogni volta che devono stampare un numero, viene generato un tempo casuale per cui con differenti esecuzioni dello stesso codice ci possono essere differenti output.
 
-#Istruzioni per l'uso
+# Istruzioni per l'uso
 
 - Scaricare il file MultiThreading.java
 - Importarlo in NetBeans o in qualsiasi altro IDE
@@ -11,7 +11,7 @@ Nel codice d'esecuzione dei threads, ogni volta che devono stampare un numero, v
 - Premere "Esegui" (la freccia verde in alto)
 - L'output verrà mostrato in una finestra in basso
 
-#Istruzioni per modificare il tempo random
+# Istruzioni per modificare il tempo random
 
 Il tempo random del programma viene generato tra i 100 e 300 millisecondi. Per modificare questa caratteristica, bisogna:
 - Scaricare il file MultiThreading.java
