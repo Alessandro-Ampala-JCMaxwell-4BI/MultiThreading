@@ -56,6 +56,7 @@ class TicTacToe implements Runnable {
     private static String precedente;
     public static int punteggio = 0;
     private Random rand = new Random(); //oggetto Random per generazione di numeri random
+    private int pickedNumber;
 
     // Costruttore, possiamo usare il costruttore per passare dei parametri al THREAD
     public TicTacToe (String s) {
@@ -70,7 +71,8 @@ class TicTacToe implements Runnable {
             msg = "<" + t + "> ";
             
             try {
-                TimeUnit.MILLISECONDS.sleep(rand.nextInt(300) + 100);
+                pickedNumber = rand.nextInt(300) + 100;
+                TimeUnit.MILLISECONDS.sleep(pickedNumber);
             } catch (InterruptedException e) {
                 System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
                 return; //me ne vado = termino il THREAD
