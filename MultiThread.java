@@ -26,21 +26,13 @@ public class MultiThread {
         long start = System.currentTimeMillis();
         
         // Posso creare un THREAD e avviarlo immediatamente
-        Thread tic = new Thread (new TicTac("TIC"));
+        Thread tic = new Thread (new TicTacToe("TIC"));
+        Thread tac = new Thread(new TicTacToe("TAC"));
+        Thread toe = new Thread(new TicTacToe("TOE"));
+        
+        toe.start();
+        tac.start();
         tic.start();
-        
-        // Posso creare un 2ndo THREAD e farlo iniziare qualche tempo dopo...
-        Thread tac = new Thread(new TicTac("TAC"));
-        
-        try {
-            TimeUnit.MILLISECONDS.sleep(1111);
-            tac.start();  // avvio del secondo THREAD
-        } catch (InterruptedException e) {}
-        
-        try {
-            TimeUnit.MILLISECONDS.sleep(1234);
-        } catch (InterruptedException e) {}
-        tac.interrupt(); // stop 2nd THREAD
 
         
         long end = System.currentTimeMillis();
