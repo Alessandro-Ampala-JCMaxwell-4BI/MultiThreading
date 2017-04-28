@@ -33,7 +33,12 @@ public class MultiThread {
         toe.start();
         tac.start();
         tic.start();
-
+		
+        try{
+            tic.join();
+            tac.join();
+            toe.join();
+        }catch (InterruptedException e) {}
         
         long end = System.currentTimeMillis();
         System.out.println("Main Thread completata! tempo di esecuzione: " + (end - start) + "ms");
