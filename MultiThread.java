@@ -50,14 +50,14 @@ public class MultiThread {
 // +1 si puo estendere da un altra classe
 // +1 si possono passare parametri (usando il Costruttore)
 // +1 si puo' controllare quando un THREAD inizia indipendentemente da quando e' stato creato
-class TicTac implements Runnable {
+class TicTacToe implements Runnable {
     
     // non essesndo "static" c'e' una copia delle seguenti variabili per ogni THREAD 
     private String t;
     private String msg;
 
     // Costruttore, possiamo usare il costruttore per passare dei parametri al THREAD
-    public TicTac (String s) {
+    public TicTacToe (String s) {
         this.t = s;
     }
     
