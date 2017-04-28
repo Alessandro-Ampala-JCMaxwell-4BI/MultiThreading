@@ -1,21 +1,25 @@
 # TicTacToe
-Questo Branch e' usato per creare una discussione in classe riguardo l'esercizio TicTacToe compresi i concetti che sono legati al codice.
 
-Per la discussione ho creato una Pull Request "TicTacToe-4Binfo-2017".
+Il programma è basato sull'uso dei threads. Ci sono 3 threads che partono QUASI contemporaneamente, mentre la loro esecuzione avviene contemporaneamente. Quando TOE capita subito dopo TAC c'è un punteggio che viene aumentato di uno (il quale parte da 0 ovviamente).
+Nel codice d'esecuzione dei threads, ogni volta che devono stampare un numero, viene generato un tempo casuale per cui con differenti esecuzioni dello stesso codice ci possono essere differenti output.
 
-Vorrei che tutti partecipassero attivamente alla discussione.
+#Istruzioni per l'uso
 
-# Istruzioni
-Ognuno degli studenti deve: 
-1. Creare un Fork del mio progetto MutiThreading.
-2. Creare un Branch chiamato Esercizio 1.
-3. Fare le modifiche del codice per svolgere l'Esercizio 1.
-4. Per ogni modifica apportata introdurre un commento nel codice.
-5. Modificare README file aggiungere la descrizione del programma TicTacToe.
-6. Scrivere una pagina WIKI con l'elenco dei concetti imparati e la descrizione con proprie parole di ogni concetto.
-7. Verificare (testare) il codice che si e' modificato.
-8. Quando il codice funziona correttamente fare un MERGE (fusione) del Branch "Esercizio 1" con il Branch "master"
+- Scaricare il file MultiThreading.java
+- Importarlo in NetBeans o in qualsiasi altro IDE
+- Andare a modificare il nome del package (se necessario)
+- Premere "Esegui" (la freccia verde in alto)
+- L'output verrà mostrato in una finestra in basso
 
-NOTA: Il testo dell'Esercizio 1 si trova nella WIKI di questo progetto.
+#Istruzioni per modificare il tempo random
 
-# Buon Lavoro!
+Il tempo random del programma viene generato tra i 100 e 300 millisecondi. Per modificare questa caratteristica, bisogna:
+- Scaricare il file MultiThreading.java
+- Importarlo in NetBeans o in qualsiasi altro IDE
+- Andare a modificare il nome del package (se necessario)
+- Andare a modificare il codice alla linea 75, in cui il numero tra parentesi riguarda il numero massimo che può essere generato casualmente, mentre quello dopo va ad indicare il numero minimo. In questo modo si imposta un range di numeri che verrano generati casualmente in cui ci il primo indica il massimo mentre il secondo indica il minimo.
+
+ATTENZIONE: i numeri inseriti sono intesi come millisecondi (quindi 300 saranno 0,3 secondi)
+
+Esempio: se vogliamo creare un range di numeri casuali che parte da 1 secondo e arriva a 3,5 secondi, dovremo scrivere:
+pickedNumber = rand.nextInt(3500) + 1000;
