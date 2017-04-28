@@ -10,6 +10,7 @@
 package multithread;
 
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 /**
  *
  * @author Matteo Palitto
@@ -42,6 +43,7 @@ public class MultiThread {
         
         long end = System.currentTimeMillis();
         System.out.println("Main Thread completata! tempo di esecuzione: " + (end - start) + "ms");
+	System.out.println("Punteggio: " + TicTacToe.punteggio);
     }
     
 }
@@ -55,6 +57,10 @@ class TicTacToe implements Runnable {
     // non essesndo "static" c'e' una copia delle seguenti variabili per ogni THREAD 
     private String t;
     private String msg;
+    private static String precedente;
+    public static int punteggio = 0;
+    private Random rand = new Random(); 
+    private int pickedNumber;
 
     // Costruttore, possiamo usare il costruttore per passare dei parametri al THREAD
     public TicTacToe (String s) {
@@ -70,12 +76,17 @@ class TicTacToe implements Runnable {
             //System.out.print(msg);
             
             try {
-                TimeUnit.MILLISECONDS.sleep(400);
+                pickedNumber = rand.nextInt(300) + 100;
+                TimeUnit.MILLISECONDS.sleep(pickedNumber);
             } catch (InterruptedException e) {
                 System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
                 return; //me ne vado = termino il THREAD
             }
             msg += t + ": " + i;
+            System.out.println(msg);
+	    precedente = t;
+            if(t.equals("TOE") && precedente.equals("TAC"))
+                punteggio ++;
             System.out.println(msg);
          
         }
