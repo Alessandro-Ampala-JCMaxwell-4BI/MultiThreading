@@ -10,31 +10,27 @@
 package multithread;
 
 import java.util.concurrent.TimeUnit;
-import java.util.Random;
-/**
- *
- * @author Matteo Palitto
- */
+import java.util.Random; //classe per la generazione di numeri random
+
 public class MultiThread {
 
-    /**
-     * @param args the command line arguments
-     */
     // "main" e' il THREAD principale da cui vengono creati e avviati tutti gli altri THREADs
     // i vari THREADs poi evolvono indipendentemente dal "main" che puo' eventualmente terminare prima degli altri
     public static void main(String[] args) {
         System.out.println("Main Thread iniziata...");
         long start = System.currentTimeMillis();
         
-        // Posso creare un THREAD e avviarlo immediatamente
+        // Creazione threads
         Thread tic = new Thread (new TicTacToe("TIC"));
         Thread tac = new Thread(new TicTacToe("TAC"));
         Thread toe = new Thread(new TicTacToe("TOE"));
         
+	//Avvio threads
         toe.start();
         tac.start();
         tic.start();
-		
+	
+	// Attendo che l'esecuzione di ogni thread finisca per poter andare avanti con il codice
         try{
             tic.join();
             tac.join();
@@ -43,7 +39,7 @@ public class MultiThread {
         
         long end = System.currentTimeMillis();
         System.out.println("Main Thread completata! tempo di esecuzione: " + (end - start) + "ms");
-	System.out.println("Punteggio: " + TicTacToe.punteggio);
+	System.out.println("Punteggio: " + TicTacToe.punteggio);	// Stampa del punteggio
     }
     
 }
@@ -54,13 +50,12 @@ public class MultiThread {
 // +1 si puo' controllare quando un THREAD inizia indipendentemente da quando e' stato creato
 class TicTacToe implements Runnable {
     
-    // non essesndo "static" c'e' una copia delle seguenti variabili per ogni THREAD 
+    // per le variabili static c'è una variabile in comune a tutti i threads, mentre per le altre ce n'è una copia per ogni thread
     private String t;
     private String msg;
     private static String precedente;
     public static int punteggio = 0;
-    private Random rand = new Random(); 
-    private int pickedNumber;
+    private Random rand = new Random(); //oggetto Random per generazione di numeri random
 
     // Costruttore, possiamo usare il costruttore per passare dei parametri al THREAD
     public TicTacToe (String s) {
@@ -73,11 +68,9 @@ class TicTacToe implements Runnable {
     public void run() {
         for (int i = 10; i > 0; i--) {
             msg = "<" + t + "> ";
-            //System.out.print(msg);
             
             try {
-                pickedNumber = rand.nextInt(300) + 100;
-                TimeUnit.MILLISECONDS.sleep(pickedNumber);
+                TimeUnit.MILLISECONDS.sleep(rand.nextInt(300) + 100);
             } catch (InterruptedException e) {
                 System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
                 return; //me ne vado = termino il THREAD
