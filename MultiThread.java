@@ -18,11 +18,12 @@ public class MultiThread {
     public static void main(String[] args) {
         System.out.println("Main Thread iniziata...");
         long start = System.currentTimeMillis();
+        Monitor monitor = new Monitor();
         
         // Creazione threads
-        Thread tic = new Thread (new TicTacToe("TIC"));
-        Thread tac = new Thread(new TicTacToe("TAC"));
-        Thread toe = new Thread(new TicTacToe("TOE"));
+        Thread tic = new Thread (new TicTacToe("TIC", monitor));
+        Thread tac = new Thread(new TicTacToe("TAC", monitor));
+        Thread toe = new Thread(new TicTacToe("TOE", monitor));
         
         //Avvio threads
         toe.start();
@@ -31,8 +32,6 @@ public class MultiThread {
         
         // Attendo che l'esecuzione di ogni thread finisca per poter andare avanti con il codice
         try{
-        	tac.join();
-        	tic.join();
             toe.join();
         }catch (InterruptedException e) {}
         
@@ -52,39 +51,46 @@ class TicTacToe implements Runnable {
      // per le variabili static c'è una variabile in comune a tutti i threads, mentre per le altre ce n'è una copia per ogni thread
     private String t;
     private String msg;
-    private static String precedente = "a caso";
     public static int punteggio = 0;
-    private Random rand = new Random(); //oggetto Random per generazione di numeri random
-    private int pickedNumber;
+    Monitor m;
 
     // Costruttore, possiamo usare il costruttore per passare dei parametri al THREAD
-    public TicTacToe (String s) {
+    public TicTacToe (String s, Monitor m) {
+    	this.m = m;
         this.t = s;
     }
     
-    public synchronized void Scrivi(int i) //serve ad evitare i conflitti
-    {
-    	try {
-            pickedNumber = rand.nextInt(300) + 100; 
-            TimeUnit.MILLISECONDS.sleep(pickedNumber);
-        } catch (InterruptedException e) {
-            System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
-            return; //me ne vado = termino il THREAD
-        }
-        msg += t + ": " + i;
-        if(t.equals("TOE") && precedente.equals("TAC"))
-            punteggio ++;
-        precedente = t;
-        System.out.println(msg);
-    }
     
     @Override // Annotazione per il compilatore
     // se facessimo un overloading invece di un override il copilatore ci segnalerebbe l'errore
     // per approfondimenti http://lancill.blogspot.it/2012/11/annotations-override.html
     public void run() {
         for (int i = 10; i > 0; i--) {
-            msg = "<" + t + "> ";
-            Scrivi(i);
+        	msg = "<" + t + "> " + t + ": " + i;
+            m.Scrivi(t, msg);
         }
+    }
+}
+
+class Monitor{
+	int punteggio;
+    private Random rand = new Random(); //oggetto Random per generazione di numeri random
+    private static String precedente = "";
+    
+    
+    
+	public synchronized void Scrivi(String t, String msg) //serve ad evitare i conflitti
+    {
+    	try {
+            int pickedNumber = rand.nextInt(300) + 100; 
+            TimeUnit.MILLISECONDS.sleep(pickedNumber);
+        } catch (InterruptedException e) {
+            System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
+            return; //me ne vado = termino il THREAD
+        }
+        if(t.equals("TOE") && precedente.equals("TAC"))
+            punteggio ++;
+        precedente = t;
+        System.out.println(msg);
     }
 }
