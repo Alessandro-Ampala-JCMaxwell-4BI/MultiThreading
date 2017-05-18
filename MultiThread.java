@@ -8,8 +8,6 @@
  * 6. posso passare parametri al THREADs tramite il costruttore della classe Runnable
  */
 
-package multi;
-
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
 
@@ -33,8 +31,8 @@ public class MultiThread {
         
         // Attendo che l'esecuzione di ogni thread finisca per poter andare avanti con il codice
         try{
-            tic.join();
-            tac.join();
+        	tac.join();
+        	tic.join();
             toe.join();
         }catch (InterruptedException e) {}
         
@@ -64,25 +62,29 @@ class TicTacToe implements Runnable {
         this.t = s;
     }
     
+    public synchronized void Scrivi(int i) //serve ad evitare i conflitti
+    {
+    	try {
+            pickedNumber = rand.nextInt(300) + 100; 
+            TimeUnit.MILLISECONDS.sleep(pickedNumber);
+        } catch (InterruptedException e) {
+            System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
+            return; //me ne vado = termino il THREAD
+        }
+        msg += t + ": " + i;
+        if(t.equals("TOE") && precedente.equals("TAC"))
+            punteggio ++;
+        precedente = t;
+        System.out.println(msg);
+    }
+    
     @Override // Annotazione per il compilatore
     // se facessimo un overloading invece di un override il copilatore ci segnalerebbe l'errore
     // per approfondimenti http://lancill.blogspot.it/2012/11/annotations-override.html
     public void run() {
         for (int i = 10; i > 0; i--) {
             msg = "<" + t + "> ";
-            
-            try {
-                pickedNumber = rand.nextInt(300) + 100; 
-                TimeUnit.MILLISECONDS.sleep(pickedNumber);
-            } catch (InterruptedException e) {
-                System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
-                return; //me ne vado = termino il THREAD
-            }
-            msg += t + ": " + i;
-            if(t.equals("TOE") && precedente.equals("TAC"))
-                punteggio ++;
-            precedente = t;
-            System.out.println(msg);
+            Scrivi(i);
         }
     }
 }
