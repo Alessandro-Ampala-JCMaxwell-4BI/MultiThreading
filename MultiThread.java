@@ -63,3 +63,47 @@ class TicTacToe implements Runnable {
         this.m = m;
         this.t = s;
     }
+    
+    @Override // Annotazione per il compilatore
+    // se facessimo un overloading invece di un override il copilatore ci segnalerebbe l'errore
+    // per approfondimenti http://lancill.blogspot.it/2012/11/annotations-override.html
+    public void run() {
+        for (int i = 10; i > 0; i--) {
+            msg = "<" + t + "> " + t + ": " + i;
+            m.Scrivi(t, msg);
+        }
+    }
+}
+
+//classe monitor per la gestione di risorse condivise tra threads
+class Monitor{
+    private String precedente = ""; //variabile contenente il thread eseguito precedentemente
+    private int punteggio; 
+    private Random rand = new Random(); //oggetto Random per generare numeri casuali
+    private int pickedNumber;
+    
+    //metodo synchronized. In questo modo non può essere eseguito più volte contemporaneamente
+    public synchronized void Scrivi(String t, String msg){
+            try {
+                pickedNumber = rand.nextInt(300) + 100;
+                TimeUnit.MILLISECONDS.sleep(pickedNumber);
+            } catch (InterruptedException e) {
+                System.out.println("THREAD " + t + " e' stata interrotta! bye bye...");
+                return; //me ne vado = termino il THREAD
+            }
+
+            if(t.equals("TOE") && precedente.equals("TAC")) //confronto se il thread TOE capita dopo del thread TAC
+            {
+                punteggio ++;
+                msg += "\t" + "<---------"; //aggiungo una freccia alla stringa per capire quando capita l'occorrenza
+            }
+            
+            precedente = t;
+            System.out.println(msg); 
+    }
+    
+    public int getPunteggio()
+    {
+        return punteggio;
+    }
+}
