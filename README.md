@@ -2,6 +2,7 @@
 
 Il programma è basato sull'uso dei threads. Ci sono 3 threads che partono QUASI contemporaneamente, mentre la loro esecuzione avviene contemporaneamente. Quando TOE capita subito dopo TAC c'è un punteggio che viene aumentato di uno (il quale parte da 0 ovviamente).
 Nel codice d'esecuzione dei threads, ogni volta che devono stampare un numero, viene generato un tempo casuale per cui con differenti esecuzioni dello stesso codice ci possono essere differenti output.
+I threads si servono di un oggetto Monitor per gestire le risorse condivise.
 
 # Istruzioni per l'uso
 
@@ -23,3 +24,6 @@ ATTENZIONE: i numeri inseriti sono intesi come millisecondi (quindi 300 saranno 
 
 Esempio: se vogliamo creare un range di numeri casuali che parte da 1 secondo e arriva a 3,5 secondi, dovremo scrivere:
 pickedNumber = rand.nextInt(3500) + 1000;
+
+# Aggiungere o rimuovere risorse condivise
+Le risorse condivise sono dichiarate nella classe Monitor, quindi se si vogliono aggiungere o rimuovere delle risorse è necessario dichiararle in quest'ultima. Ovviamente devono anche essere integrate con l'algoritmo di gestione delle risorse condivise, che per ora è solamente il metodo Scrivi. Ricordarsi di dichiarare i metodi synchronized in caso se ne volessero dichiarare altri per gestire le risorse condivise.
